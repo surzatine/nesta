@@ -1,0 +1,24 @@
+#header__table-td-img{
+	border-radius: 20%;
+	background: pink;
+	/* border: 1px solid green; */
+	width: 7em;
+    height: 7em;
+    padding: 2px;
+    margin: 2px;
+}
+#header__table-td a{
+    margin: 2em;
+}
+#header__table-td-logout__button{
+	padding: 1em 1.5em;
+	/* background-color: #fff; */
+	border: none;
+	border-radius: 1em;
+	text-decoration: none;
+    /* color: red; */
+}
+
+/* p{
+	background-color: red;
+} */
