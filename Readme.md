@@ -1,7 +1,7 @@
 # ABSTRACT
 Nesta is a social media platform that enables user to share information, photos,add friends, message, share everyday moments, share thoughts and ideas and keep in touch with friends and family. Nesta is derived from Jamaican language which defines ‘messenger’. Nesta offers real time communication through internet or LAN. It allows user who sign-up to connect with friends, work colleagues, people and add or unfriend friends. Users can use search bar to find their friends and add them with the help of personal details like username, email and name. It allows user to share ideas through textor post, update profile and also visit friends profile. It allows users to comment on any post, but it does not allow users to add toxic comments. The primary purpose and objective of nesta is to provide people the power to build community and bring the world closer together in friendly environment. Nesta supports MD5 hashing algorithm to store password safely. All the message sent and received are encrypted in secure communication utilizing end to end encryption implementing RSA-4096 Asymmetric key Encryption for privacy. Through Nesta users can send even images also. Users can add story and also update newsfeed which can add comments likes and also dislike the post. In conclusion nesta aims to connect with the people around/far from them, share their ideas add/unfriend people and understand more of what's going on with the people around them and understand more in general.
 
-_**Keywords**: social media platform, messenger, RSA-4096_
+_**Keywords**: social media platform, messenger, RSA-4096_ 
 
 # ABBREVIATIONS
 
