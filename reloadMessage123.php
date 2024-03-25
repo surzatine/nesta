@@ -33,6 +33,35 @@ while($row = $senderProfileQuery->fetch_assoc()){
 	$sender_private_key = $row["private_key"];
 }
 
+// Refresh
+// $refresh = "select * from messages where (sender_id = $sess_uid and sender_refresh = 1) or (receiver_id = $sess_uid and receiver_refresh = 1);";
+
+$refresh_false = 0;
+// $selectQuery = $mysql->query($refresh);
+// while($row = $selectQuery->fetch_assoc()){
+	// $refresh_counter += $row["sender_refresh"] + $row["receiver_refresh"];
+	
+    $registerQuery = $mysql->prepare("update messages set sender_refresh = ? where (sender_id = $sess_uid and sender_refresh = 1);");
+        
+    $registerQuery->bind_param("s",$refresh_false);
+    
+    $registerQuery->execute();
+
+	
+    $registerQuery = $mysql->prepare("update messages set receiver_refresh = ? where (receiver_id = $sess_uid and receiver_refresh = 1);");
+        
+    $registerQuery->bind_param("s",$refresh_false);
+    
+    $registerQuery->execute();
+
+	// echo $us;
+// }
+// if($refresh_counter > 0){
+// 	echo $refresh_counter;
+	// echo "changeContent();";
+	// echo "setInterval(changeContent,1000);";
+// }
+
 ?>
 
 
@@ -84,7 +113,7 @@ while($row = $senderProfileQuery->fetch_assoc()){
 				$messagesender = $row["sender"];
 				$message1 = $row["message"];
 				$image = $row["image"];
-				$profile = $row["profile"];
+				// $profile = $row["profile"];
 
 				// RSA DECRYPTED
 				// $decrypted_message = "";

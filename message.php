@@ -88,6 +88,8 @@ $sess_Username = $_SESSION["username"];
 
 		if($_SERVER["REQUEST_METHOD"]=="POST"){
 			$message_flag = 1;
+            $sender_refresh = 1;
+            $receiver_refresh = 1;
 
 			// RSA Encrypted
 			$text_message = $_POST["text"];
@@ -97,9 +99,9 @@ $sess_Username = $_SESSION["username"];
 				$encoded_encrypted = base64_encode($encrypted);
 			}			
 			
-			$registerQuery = $mysql->prepare("insert into messages(date, time, sender_id, receiver_id, sender, message, image, message_unread, message_counter)values (?,?,?,?,?,?,?,?,?);");
+			$registerQuery = $mysql->prepare("insert into messages(date, time, sender_id, receiver_id, sender, message, image, message_unread, message_counter, sender_refresh, receiver_refresh)values (?,?,?,?,?,?,?,?,?,?,?);");
 			
-			$registerQuery->bind_param("sssssssii",date("Y-m-d"), date("h:i:s a"),$sess_uid,$receiver_id,$sess_Username,$encoded_encrypted,$pname,$message_flag,$message_flag);
+			$registerQuery->bind_param("sssssssssss",date("Y-m-d"), date("h:i:s a"),$sess_uid,$receiver_id,$sess_Username,$encoded_encrypted,$pname,$message_flag,$message_flag, $sender_refresh, $receiver_refresh);
 			
 			$registerQuery->execute();
 		}
@@ -243,8 +245,8 @@ $sess_Username = $_SESSION["username"];
                             while($row = $query_friend_list->fetch_assoc()){
                                 $friend_id_1 = $row["friend_id_1"];
                                 $friend_id_2 = $row["friend_id_2"];
-                                $approve_friend_1 = $row["approve_friend_1"];
-                                $approve_friend_2 = $row["approve_friend_2"];
+                                // $approve_friend_1 = $row["approve_friend_1"];
+                                // $approve_friend_2 = $row["approve_friend_2"];
 
                                 
                                 
@@ -432,7 +434,43 @@ $sess_Username = $_SESSION["username"];
         xhttp.open("GET", "reloadMessage123.php?chat=<?php echo $receiver_id; ?>", true);
         xhttp.send();
     }
-    setInterval(changeContent,2000);
+
+    function RefreshCounter() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // Typical action to be performed when the document is ready:
+
+                if (xhttp.responseText > 0) {
+                    changeContent();
+                    // document.getElementById("message_").innerHTML = "lol";
+                }
+
+                // var objDiv = document.getElementById("message_inbox_id");
+                // objDiv.scrollTop = objDiv.scrollHeight;
+            }
+        };
+        // xhttp.open("GET", "ajax/note.txt", true);
+        xhttp.open("GET", "refresh.php?chat=32", true);
+        xhttp.send();
+    }
+    setInterval(RefreshCounter, 1000);
+    // <?php 
+    //     // Refresh
+    //     $refresh = "select * from messages where (sender_id = $sess_uid and sender_refresh = 1) or (receiver_id = $sess_uid and receiver_refresh = 1);";
+
+    //     $selectQuery = $mysql->query($refresh);
+    //     while($row = $selectQuery->fetch_assoc()){
+    //         $refresh_counter += $row["sender_refresh"] + $row["receiver_refresh"];
+
+    //         // echo $us;
+    //     }
+    //     if($refresh_counter > 0){
+    //         echo "changeContent();";
+    //         // echo "setInterval(changeContent,1000);";
+    //     }
+    // ?>
+    // setInterval(changeContent,2000);
 
 	
 	// var myIframe = document.getElementById('message_inbox_id');
